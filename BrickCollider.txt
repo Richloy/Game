@@ -1,0 +1,8 @@
+BrickColliderv1-In this session we create a game window using PyGame. The game window is centred using the OS and add a game loop with some event handlers for quitting and pausing the game. This is the first stage of building the game.
+BrickColliderv2-In this session we change the code in the previous video to reflect a more Object Oriented approach. Introducing the Sprite super class in the creation of game objects and the creation of a Ball with movement and restrictions for hitting the side of the game window.
+BrickColliderv3-In this session we create the Paddle and give it restricted movement between the walls of the game window. A method is added to detect when the Ball and Paddle collide which changes the direction of the Ball.
+BrickColliderv4-In this session we create the Blocks and define some constants for colours to be used in the game. This video also shows how arguments are passed to functions and how to overwrite them in Python.
+BrickColliderv5-In this session we create 3 levels and define a function on how to build the them based on the current level. When there are no blocks left the level is created and the ball position is reset.
+BrickColliderv6-In this session we add text to the game. An intro which displays the name of the game and at the start of each level a level indicator. Using a sleep function to give a coutdown and wait. 
+BrickColliderv7-In this the final session in the series of building Brick Collider: The Awesome replication of the 70's game Breakout we create game rules for losing lives and a choice to continue or quit.
+BrickColliderv8-A more complete game with more playability and a change to reflect better Ball/Brick collisions. ENJOY!!!!
