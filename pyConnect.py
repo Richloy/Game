@@ -28,3 +28,12 @@ class pyConnect:
             print (row[0], row[1], row[2], row[3])
             return("p"+str(row[2])+".png")
         
+    def get_login(self, name):
+
+        print(name)
+        command = "select * from login where player_name = \'"+name+"\'"
+        print(command)
+        cursor = db.cursor()
+        cursor.execute (command)
+        data = cursor.fetchall()
+        return data

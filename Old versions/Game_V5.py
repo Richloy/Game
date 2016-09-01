@@ -1,8 +1,8 @@
-'''Adding Database functionality'''
+'''Adding Player'''
 
 import pygame, os, MySQLdb
 from pyConnect import *
-from Login import *
+#from tklogin import *
 
 #Colours (R, G, B)
 GREEN = (0, 255, 0)
@@ -12,8 +12,7 @@ dataB = pyConnect()
 class Game:
 
     def main(self):
-
-        dataB = pyConnect()
+        
         clock = pygame.time.Clock()
         zoom_img = pygame.image.load(".\images\\zoom_in.png")
         bg = pygame.image.load(".\images\\bgnd.png")
@@ -44,12 +43,6 @@ class Game:
             screen.blit(lvl, (lvl_x, lvl_y))
             screen.blit(bdr, (0, 0))
             screen.blit(zoom_img, (775, 25))
-
-            #login/new
-            if login:
-                first_login = Window()
-                first_login.__init__()
-                
             
             #Open/Close menu
             if opening_menu:
@@ -86,6 +79,8 @@ class Game:
                             zoom = True
                             lvl = pygame.transform.scale(lvl, (1544, 650))
                             zoom_img = pygame.image.load(".\images\\zoom_out.png")
+                            lvl_x = -80
+                            lvl_y = -80
                         else:
                             zoom = False
                             lvl = pygame.transform.scale(lvl, (772, 325))
@@ -100,21 +95,6 @@ class Game:
                         if (x < 55 and 335 > y > 280):
                             opening_menu = False
                             closing_menu = True
-            if zoom:
-                if pygame.mouse.get_pressed()[0]:
-                    if (812 < x < 837 and 25 < y < 50):
-                        print ("Move up")
-                        lvl_y += 10
-                    if (812 < x < 837 and 100 < y < 125):
-                        print ("Move down")
-                        lvl_y -= 10
-                    if (775 < x < 800 and 62 < y < 87):
-                        print ("Move left")
-                        lvl_x += 10
-                    if (850 < x < 875 and 62 < y < 87):
-                        print ("Move right")
-                        lvl_x -= 10
-                        
                 #Paused Game and event
                 while pause:
                     for event in pygame.event.get():
@@ -126,6 +106,16 @@ class Game:
                             running = False
                         if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
                             pause = False
+            if zoom:
+                if pygame.mouse.get_pressed()[0]:
+                    if (812 < x < 837 and 25 < y < 50):
+                        lvl_y += 10 #Move up
+                    if (812 < x < 837 and 100 < y < 125):
+                        lvl_y -= 10 #Move down
+                    if (775 < x < 800 and 62 < y < 87):
+                        lvl_x += 10 #Move left
+                    if (850 < x < 875 and 62 < y < 87):
+                        lvl_x -= 10 #Move right
                             
     
 class Menu:
