@@ -13,43 +13,31 @@ class newlogin(tk.Tk):
 
         tk.Tk.__init__(self, parent)
         self.parent = parent
-        self.geometry('300x200')
+        #self.geometry('300x200')
         self.title('Create a New Account')
-        notebook = ttk.Notebook(self)
-        self.frame1 = ttk.Frame(notebook)
-        self.frame2 = ttk.Frame(notebook)
-        self.frame3 = ttk.Frame(notebook)
-        self.frame4 = ttk.Frame(notebook)
-        notebook.add(self.frame1, text='Name')
-        notebook.add(self.frame2, text='Gender')
-        notebook.add(self.frame3, text='Clothes')
-        notebook.add(self.frame4, text='Hair')
-        notebook.pack()
         self.init()
 
 
     def init(self):
+        self.grid()
 
         self.entry_variable = tk.StringVar()
-        self.entry = tk.Entry(self.frame1, textvariable = self.entry_variable)
+        self.entry = tk.Entry(self, textvariable = self.entry_variable)
+        self.entry.grid(column=0,row=0,sticky='EW')
         self.entry.bind("<Return>", self.on_Press_Enter)
-        self.entry.pack(anchor=tk.W)
-
-        self.password_variable = tk.StringVar()
-        self.password = tk.Entry(self.frame1, textvariable = self.password_variable)
-        self.password.bind("<Return>", self.on_Press_Enter)
-        self.password.pack()
+        self.entry_variable.set(u"Enter Text Here")
         
-        self.button = tk.Button(self.frame1,text=u"Click me !", command = self.on_Button_Click)
-        self.button.pack()
+        button = tk.Button(self,text=u"Click me !", command = self.on_Button_Click)
+        button.grid(column=1,row=0)
 
         self.label_variable = tk.StringVar()
-        self.label = tk.Label(self.frame1, textvariable = self.label_variable,
+        label = tk.Label(self, textvariable = self.label_variable,
                               anchor="w",fg="white",bg="blue")
+        label.grid(column=0,row=1,columnspan=2,sticky='EW')
         self.label_variable.set(u"Hello")
-        self.label.pack()
         
-        #self.resizable(True,False)
+        self.grid_columnconfigure(0,weight=1)
+        self.resizable(True,False)
         self.update()
         self.geometry(self.geometry())
         self.entry.focus_set()
@@ -61,7 +49,6 @@ class newlogin(tk.Tk):
         self.entry.focus_set()
         self.entry.selection_range(0, tk.END)
         print("You Clicked!")
-        print(self.entry_variable.get())
         
     def on_Press_Enter(self, event):
 
