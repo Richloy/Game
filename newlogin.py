@@ -9,14 +9,18 @@ except ImportError:
 from pyConnect import *
 
 class newlogin(tk.Tk):
-
+    
     def __init__(self, parent):
-        
+
+        #self.mainloop()
+        self.login_try = 0
         self.dataB = pyConnect() 
         tk.Tk.__init__(self, parent)
         self.parent = parent
         self.geometry('300x200')
         self.title('Login')
+        self.password_failure_max = 3
+        self.password_failures = 0
 
         self.label_variable = tk.StringVar()
         self.label = tk.Label(self, textvariable = self.label_variable,
@@ -135,10 +139,16 @@ class newlogin(tk.Tk):
         for p in passwords:
             if (p[2] == self.user_pwd_variable.get()):
                 print('Logged in')
-                #check_password.user = self.user_entry_variable.get()
-                app.destroy()
+                self.login_try = 1
+                self.destroy()
                 print('Logged in')
                 return
+        self.password_failures += 1
+        if self.password_failures == self.password_failure_max:
+            self.destroy()
+            raise SystemExit('Unauthorized login attempt')
+        else:
+            self.title('Try again. Attempt %i/%i' % (self.password_failures + 1, self.password_failure_max))
             
     def on_Button_Click(self):
 
@@ -168,7 +178,6 @@ class newlogin(tk.Tk):
     def running(self):
         print("new login started")
 
-
-#if __name__ == "__main__":
-app = newlogin(None)
-app.mainloop()
+if __name__ == "__main__":
+    app = newlogin(None)
+    app.mainloop()
