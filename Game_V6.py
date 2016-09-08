@@ -2,7 +2,8 @@
 
 import pygame, os, MySQLdb
 from pyConnect import *
-from tklogin import *
+#from tklogin import *
+from newlogin import *
 
 #Colours (R, G, B)
 GREEN = (0, 255, 0)
@@ -12,7 +13,8 @@ dataB = pyConnect()
 class Game:
 
     def main(self):
-        
+
+        #new_login = newlogin(None)
         clock = pygame.time.Clock()
         zoom_img = pygame.image.load(".\images\\zoom_in.png")
         bg = pygame.image.load(".\images\\bgnd.png")
