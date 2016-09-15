@@ -19,7 +19,7 @@ class pyConnect:
         cursor = db.cursor()
 
         # execute the SQL query using execute() method.
-        cursor.execute ("select * from players where ID = 1")
+        cursor.execute ("SELECT * FROM players WHERE ID = 1")
 
         # fetch all of the rows from the query
         data = cursor.fetchall()
@@ -31,9 +31,25 @@ class pyConnect:
     def get_login(self, name):
 
         print(name)
-        command = "select * from login where player_name = \'"+name+"\'"
+        command = "SELECT * FROM login WHERE player_name = \'"+name+"\'"
         print(command)
         cursor = db.cursor()
         cursor.execute (command)
         data = cursor.fetchall()
         return data
+
+    def check_new_username(self, name):
+
+        print(name)
+        command = "SELECT COUNT(*) FROM login WHERE player_name = \'"+name+"\'"
+        print(command)
+        cursor = db.cursor()
+        cursor.execute (command)
+        data = cursor.fetchall()
+        print(data)
+        
+        if data[0][0] == 0:
+            print("Not found")
+            return False
+        else:
+            return True

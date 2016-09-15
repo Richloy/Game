@@ -1,4 +1,6 @@
-''' Login Using Frames'''
+''' Login Using Frames
+    Created Database check for Username
+    '''
 
 try:
     import tkinter as tk
@@ -12,7 +14,6 @@ class newlogin(tk.Tk):
     
     def __init__(self, parent):
 
-        #self.mainloop()
         self.login_try = 0
         self.dataB = pyConnect() 
         tk.Tk.__init__(self, parent)
@@ -28,7 +29,6 @@ class newlogin(tk.Tk):
         self.label_variable.set("")
         self.label.pack()
         self.login()
-        #self.user_credentials()
 
     def login(self):
         
@@ -59,7 +59,7 @@ class newlogin(tk.Tk):
         self.button = tk.Button(self.login_frame,text = "Login", command = self.check_password)
         self.button.grid(column = 1,row = 3, sticky = 'E')
         
-        self.button = tk.Button(self.login_frame,text = "New Account", command = self.on_Button_Click)
+        self.button = tk.Button(self.login_frame,text = "New Account", command = self.new_acc_click)
         self.button.grid(column = 2, row = 3)
         
         #self.resizable(True,False)
@@ -74,21 +74,21 @@ class newlogin(tk.Tk):
         self.grid()
         
         self.user_label = tk.Label(self.create_frame, text="Username", fg="red")
-        self.user_label.grid(column=0, row=0)
+        self.user_label.grid(column = 0, row = 0)
 
         self.user_entry_variable = tk.StringVar()
         self.user_entry = tk.Entry(self.create_frame, textvariable = self.user_entry_variable, fg="brown")
-        self.user_entry.grid(column=1, row=0)
+        self.user_entry.grid(column = 1, row = 0)
 
         seperator = tk.Label(self.create_frame, text="")
-        seperator.grid(column=0, row=1, sticky='EW')
+        seperator.grid(column = 0, row = 1, sticky = 'EW')
         
         self.user_pwd_label = tk.Label(self.create_frame, text="Password", fg="red")
-        self.user_pwd_label.grid(column=0, row=2, sticky='EW')
+        self.user_pwd_label.grid(column = 0, row = 2, sticky = 'EW')
 
         self.user_pwd_variable = tk.StringVar()
         self.user_pwd_entry = tk.Entry(self.create_frame, textvariable = self.user_pwd_variable, fg="brown")
-        self.user_pwd_entry.grid(column=1, row=2)
+        self.user_pwd_entry.grid(column = 1, row = 2)
 
         '''self.entry_variable = tk.StringVar()
         self.entry = tk.Entry(self.frame1, textvariable = self.entry_variable)
@@ -99,9 +99,14 @@ class newlogin(tk.Tk):
         self.password = tk.Entry(self.frame1, textvariable = self.password_variable)
         self.password.bind("<Return>", self.on_Press_Enter)
         self.password.pack()'''
+        self.button = tk.Button(self.create_frame,text = "Check", command = self.check_username)
+        self.button.grid(column = 2, row = 0)
         
-        self.button = tk.Button(self.create_frame,text=u"Gender ->", command = self.on_Button_Click)
-        self.button.grid(column=1,row=3)
+        self.button = tk.Button(self.create_frame,text = "<- Login", command = self.cred_back_click)
+        self.button.grid(column = 1, row = 3, sticky = 'E')
+        
+        self.button = tk.Button(self.create_frame,text=u"Gender ->", command = self.cred_forward_click)
+        self.button.grid(column = 2, row = 3)
         
         #self.resizable(True,False)
         self.update()
@@ -117,10 +122,10 @@ class newlogin(tk.Tk):
         v = tk.IntVar()
         
         self.gender_radio1 = tk.Radiobutton(self.gender_frame, text = "Male", variable = v, value = 0, width = 25, indicatoron = 0)
-        self.gender_radio1.grid(column=0, row=0, columnspan = 2, sticky = 'W')
+        self.gender_radio1.grid(column = 0, row = 0, columnspan = 2, sticky = 'W')
 
         self.gender_radio2 = tk.Radiobutton(self.gender_frame, text = "Female", variable = v, value = 1, width = 25, indicatoron = 0)
-        self.gender_radio2.grid(column=0, row=1, columnspan = 2, sticky = 'W')
+        self.gender_radio2.grid(column = 0, row = 1, columnspan = 2, sticky = 'W')
         self.update()
 
         seperator = tk.Label(self.gender_frame, text = "")
@@ -128,9 +133,9 @@ class newlogin(tk.Tk):
         seperator.grid(column = 0, row = 2, sticky =' EW')
         
         self.gender_button = tk.Button(self.gender_frame,text=u"Skin Colour ->", command = self.on_gender_button_click)
-        self.gender_button.grid(column=1,row=3)
+        self.gender_button.grid(column = 1, row = 3)
         self.gender_back_button = tk.Button(self.gender_frame,text=u"<- Back", command = self.on_gender_back_button_click)
-        self.gender_back_button.grid(column = 0,row = 3, sticky = 'E')
+        self.gender_back_button.grid(column = 0, row = 3, sticky = 'E')
 
     def check_password(self):
         print(self.user_entry_variable.get(), self.user_pwd_variable.get())
@@ -150,21 +155,43 @@ class newlogin(tk.Tk):
         else:
             self.title('Try again. Attempt %i/%i' % (self.password_failures + 1, self.password_failure_max))
             
-    def on_Button_Click(self):
+    def new_acc_click(self):
 
         self.label_variable.set("Welcome " + self.user_entry_variable.get())
         self.user_entry.focus_set()
         self.user_entry.selection_range(0, tk.END)
         print("You Clicked!")
-        print(self.user_entry_variable.get())
-        print(self.user_pwd_variable.get())
-        self.create_frame.destroy()
-        self.user_gender()
+        self.login_frame.destroy()
+        self.user_credentials()
 
-    def on_gender_button_click(self):
+    def cred_back_click(self):
+        self.create_frame.destroy()
+        self.login()
+        
+    def cred_forward_click(self):
+        
+        print(self.user_entry_variable.get())
+        used = self.dataB.check_new_username(self.user_entry_variable.get())
+        if used:
+            self.label_variable.set(self.user_entry_variable.get() + " Is in use, Please choose another Username")
+        else:
+            self.label_variable.set(self.user_entry_variable.get() + " Is Available")
+
+    def check_username(self):
+
+        used = self.dataB.check_new_username(self.user_entry_variable.get())
+        print(used)
+        if used:
+            print("Name in Use")
+            self.label_variable.set(self.user_entry_variable.get() + " Is in use, Please choose another Username")
+        else:
+            print("Name not in Use")
+            self.label_variable.set(self.user_entry_variable.get() + " Is Available")
+            
+    def gender_forward_click(self):
         pass
 
-    def on_gender_back_button_click(self):
+    def gender_back_click(self):
         self.gender_frame.destroy()
         self.user_credentials()
         
