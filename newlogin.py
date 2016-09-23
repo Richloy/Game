@@ -1,5 +1,5 @@
 ''' Login Using Frames
-    Created Database check for Username
+    Created Show Password Checkbox
     '''
 
 try:
@@ -35,6 +35,8 @@ class newlogin(tk.Tk):
         #create frame
         self.login_frame = ttk.Labelframe(self, text = 'Login Details')
         self.login_frame.pack()
+        self.label_variable.set("")
+        self.checked = tk.IntVar()
         self.grid()
 
         #Username
@@ -53,14 +55,19 @@ class newlogin(tk.Tk):
         self.user_pwd_label.grid(column = 0, row = 2, sticky = 'EW')
 
         self.user_pwd_variable = tk.StringVar()
-        self.user_pwd_entry = tk.Entry(self.login_frame, textvariable = self.user_pwd_variable, fg = "brown")
+        self.user_pwd_entry = tk.Entry(self.login_frame, textvariable = self.user_pwd_variable, fg = "brown", show = "*")
         self.user_pwd_entry.grid(column = 1, row = 2)
 
-        self.button = tk.Button(self.login_frame,text = "Login", command = self.check_password)
-        self.button.grid(column = 1,row = 3, sticky = 'E')
+        #Buttons
+        self.button_login = tk.Button(self.login_frame,text = "Login", command = self.check_password)
+        self.button_login.grid(column = 1,row = 4, sticky = 'E')
         
-        self.button = tk.Button(self.login_frame,text = "New Account", command = self.new_acc_click)
-        self.button.grid(column = 2, row = 3)
+        self.button_new = tk.Button(self.login_frame,text = "New Account", command = self.new_acc_click)
+        self.button_new.grid(column = 2, row = 4)
+
+        #Password show checkbox
+        self.pass_radio1 = tk.Checkbutton(self.login_frame, text = "Show Password", variable = self.checked, width = 25, command = self.show_pass)
+        self.pass_radio1.grid(column = 0, row = 3, columnspan = 2, sticky = 'W')
         
         #self.resizable(True,False)
         self.update()
@@ -69,57 +76,57 @@ class newlogin(tk.Tk):
         self.user_entry.selection_range(0, tk.END)
 
     def user_credentials(self):
+
+        #Create Frame
         self.create_frame = ttk.Labelframe(self, text = 'Credentials', borderwidth = 5)
         self.create_frame.pack()
+        self.checked = tk.IntVar()
         self.grid()
-        
-        self.user_label = tk.Label(self.create_frame, text="Username", fg="red")
+
+        #Username
+        self.user_label = tk.Label(self.create_frame, text = "Username", fg = "red")
         self.user_label.grid(column = 0, row = 0)
 
         self.user_entry_variable = tk.StringVar()
-        self.user_entry = tk.Entry(self.create_frame, textvariable = self.user_entry_variable, fg="brown")
+        self.user_entry = tk.Entry(self.create_frame, textvariable = self.user_entry_variable, fg = "brown")
         self.user_entry.grid(column = 1, row = 0)
 
-        seperator = tk.Label(self.create_frame, text="")
+        seperator = tk.Label(self.create_frame, text = "")
         seperator.grid(column = 0, row = 1, sticky = 'EW')
-        
-        self.user_pwd_label = tk.Label(self.create_frame, text="Password", fg="red")
+
+        #Password
+        self.user_pwd_label = tk.Label(self.create_frame, text = "Password", fg = "red")
         self.user_pwd_label.grid(column = 0, row = 2, sticky = 'EW')
 
         self.user_pwd_variable = tk.StringVar()
-        self.user_pwd_entry = tk.Entry(self.create_frame, textvariable = self.user_pwd_variable, fg="brown")
+        self.user_pwd_entry = tk.Entry(self.create_frame, textvariable = self.user_pwd_variable, fg = "brown", show = "*")
         self.user_pwd_entry.grid(column = 1, row = 2)
 
-        '''self.entry_variable = tk.StringVar()
-        self.entry = tk.Entry(self.frame1, textvariable = self.entry_variable)
-        self.entry.bind("<Return>", self.on_Press_Enter)
-        self.entry.pack(anchor=tk.W)
+        #Password show checkbox
+        self.pass_radio2 = tk.Checkbutton(self.create_frame, text = "Show Password", variable = self.checked, width = 25, command = self.show_pass)
+        self.pass_radio2.grid(column = 0, row = 3, columnspan = 2, sticky = 'W')
 
-        self.password_variable = tk.StringVar()
-        self.password = tk.Entry(self.frame1, textvariable = self.password_variable)
-        self.password.bind("<Return>", self.on_Press_Enter)
-        self.password.pack()'''
-        self.button = tk.Button(self.create_frame,text = "Check", command = self.check_username)
-        self.button.grid(column = 2, row = 0)
+        #Buttons        
+        self.button_check = tk.Button(self.create_frame,text = "Check", command = self.check_username)
+        self.button_check.grid(column = 2, row = 0)
         
-        self.button = tk.Button(self.create_frame,text = "<- Login", command = self.cred_back_click)
-        self.button.grid(column = 1, row = 3, sticky = 'E')
+        self.button_back = tk.Button(self.create_frame,text = "<- Login", command = self.cred_back_click)
+        self.button_back.grid(column = 1, row = 4, sticky = 'E')
         
-        self.button = tk.Button(self.create_frame,text=u"Gender ->", command = self.cred_forward_click)
-        self.button.grid(column = 2, row = 3)
+        self.button_forward = tk.Button(self.create_frame,text = "Gender ->", command = self.cred_forward_click)
+        self.button_forward.grid(column = 2, row = 4)
         
-        #self.resizable(True,False)
         self.update()
         self.geometry(self.geometry())
         self.user_entry.focus_set()
         self.user_entry.selection_range(0, tk.END)
 
     def user_gender(self):
+        
         print("Select Gender")
         self.gender_frame = ttk.Labelframe(self, text = 'Select Gender')
         self.gender_frame.pack()
         self.grid()
-        v = tk.IntVar()
         
         self.gender_radio1 = tk.Radiobutton(self.gender_frame, text = "Male", variable = v, value = 0, width = 25, indicatoron = 0)
         self.gender_radio1.grid(column = 0, row = 0, columnspan = 2, sticky = 'W')
@@ -154,6 +161,13 @@ class newlogin(tk.Tk):
             raise SystemExit('Unauthorized login attempt')
         else:
             self.title('Try again. Attempt %i/%i' % (self.password_failures + 1, self.password_failure_max))
+
+    def show_pass(self):
+
+        if (self.checked.get()):
+            self.user_pwd_entry.config(show = '')
+        else:
+            self.user_pwd_entry.config(show = "*")
             
     def new_acc_click(self):
 
