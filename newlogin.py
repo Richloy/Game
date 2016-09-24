@@ -126,12 +126,13 @@ class newlogin(tk.Tk):
         print("Select Gender")
         self.gender_frame = ttk.Labelframe(self, text = 'Select Gender')
         self.gender_frame.pack()
+        self.gender = tk.IntVar()
         self.grid()
         
-        self.gender_radio1 = tk.Radiobutton(self.gender_frame, text = "Male", variable = v, value = 0, width = 25, indicatoron = 0)
+        self.gender_radio1 = tk.Radiobutton(self.gender_frame, text = "Male", variable = self.gender, value = 0, width = 25, indicatoron = 0)
         self.gender_radio1.grid(column = 0, row = 0, columnspan = 2, sticky = 'W')
 
-        self.gender_radio2 = tk.Radiobutton(self.gender_frame, text = "Female", variable = v, value = 1, width = 25, indicatoron = 0)
+        self.gender_radio2 = tk.Radiobutton(self.gender_frame, text = "Female", variable = self.gender, value = 1, width = 25, indicatoron = 0)
         self.gender_radio2.grid(column = 0, row = 1, columnspan = 2, sticky = 'W')
         self.update()
 
@@ -139,11 +140,36 @@ class newlogin(tk.Tk):
         #redbutton.pack(anchor = tk.NW)
         seperator.grid(column = 0, row = 2, sticky =' EW')
         
-        self.gender_button = tk.Button(self.gender_frame,text=u"Skin Colour ->", command = self.on_gender_button_click)
+        self.gender_button = tk.Button(self.gender_frame, text = "Skin Colour ->", command = self.gender_forward_click)
         self.gender_button.grid(column = 1, row = 3)
-        self.gender_back_button = tk.Button(self.gender_frame,text=u"<- Back", command = self.on_gender_back_button_click)
+        self.gender_back_button = tk.Button(self.gender_frame, text = "<- Back", command = self.gender_back_click)
         self.gender_back_button.grid(column = 0, row = 3, sticky = 'E')
 
+    def skin_colour(self):
+        
+        print("Select Colour")
+        self.colour_frame = ttk.Labelframe(self, text = 'Select Skin Tone')
+        self.colour_frame.pack()
+        self.skin_colour = tk.IntVar()
+        self.image1 = tk.PhotoImage(file = ".\images\\col1.png")
+        self.image2 = tk.PhotoImage(file = ".\images\\col2.png")
+        self.grid()
+        
+        self.gender_radio1 = tk.Radiobutton(self.colour_frame, image = self.image1, variable = self.skin_colour, value = 0, width = 40, height = 40, indicatoron = 0)
+        self.gender_radio1.grid(column = 0, row = 0, columnspan = 2, sticky = 'W')
+
+        self.gender_radio2 = tk.Radiobutton(self.colour_frame, image = self.image2, variable = self.skin_colour, value = 1, width = 40, height = 40, indicatoron = 0)
+        self.gender_radio2.grid(column = 1, row = 0, columnspan = 2, sticky = 'W')
+        self.update()
+
+        seperator = tk.Label(self.colour_frame, text = "")
+        seperator.grid(column = 0, row = 1, sticky =' EW')
+        
+        self.gender_button = tk.Button(self.colour_frame, text = "Skin Colour ->", command = self.colour_forward_click)
+        self.gender_button.grid(column = 1, row = 2)
+        self.gender_back_button = tk.Button(self.colour_frame, text = "<- Back", command = self.colour_back_click)
+        self.gender_back_button.grid(column = 0, row = 2, sticky = 'E')
+        
     def check_password(self):
         print(self.user_entry_variable.get(), self.user_pwd_variable.get())
         passwords = self.dataB.get_login(self.user_entry_variable.get())
@@ -174,7 +200,6 @@ class newlogin(tk.Tk):
         self.label_variable.set("Welcome " + self.user_entry_variable.get())
         self.user_entry.focus_set()
         self.user_entry.selection_range(0, tk.END)
-        print("You Clicked!")
         self.login_frame.destroy()
         self.user_credentials()
 
@@ -190,6 +215,8 @@ class newlogin(tk.Tk):
             self.label_variable.set(self.user_entry_variable.get() + " Is in use, Please choose another Username")
         else:
             self.label_variable.set(self.user_entry_variable.get() + " Is Available")
+            self.create_frame.destroy()
+            self.user_gender()
 
     def check_username(self):
 
@@ -203,11 +230,25 @@ class newlogin(tk.Tk):
             self.label_variable.set(self.user_entry_variable.get() + " Is Available")
             
     def gender_forward_click(self):
-        pass
+        
+        print(self.gender.get())
+        self.gender_frame.destroy()
+        self.skin_colour()
 
     def gender_back_click(self):
+        
         self.gender_frame.destroy()
         self.user_credentials()
+                    
+    def colour_forward_click(self):
+        print(self.skin_colour.get())
+        #self.gender_frame.destroy()
+        #self.skin_colour()
+
+    def colour_back_click(self):
+        
+        pass #self.gender_frame.destroy()
+        #self.user_credentials()
         
     def on_Press_Enter(self, event):
 
