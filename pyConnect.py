@@ -13,20 +13,20 @@ class pyConnect:
     def my_connect(self):
         print("I've Connected to PyConnect.py")
 
-    def get_player(self):
+    def get_player(self, name):
 
         # prepare a cursor object using cursor() method
         cursor = db.cursor()
 
         # execute the SQL query using execute() method.
-        cursor.execute ("SELECT * FROM players WHERE ID = 1")
+        cursor.execute ("SELECT * FROM players WHERE name = \'"+name+"\'")
 
         # fetch all of the rows from the query
         data = cursor.fetchall()
 
         for row in data:
             print (row[0], row[1], row[2], row[3])
-            return("p"+str(row[2])+".png")
+            return(str(row[2])+str(row[3])+".png")
         
     def get_login(self, name):
 

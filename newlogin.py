@@ -18,7 +18,13 @@ class newlogin(tk.Tk):
         self.dataB = pyConnect() 
         tk.Tk.__init__(self, parent)
         self.parent = parent
+
+        '''Center Window
+        x = (self.winfo_screenwidth() - self.winfo_reqwidth()) / 2
+        y = (self.winfo_screenheight() - self.winfo_reqheight()) / 2
+        self.geometry("+%d+%d" % (x, y))'''
         self.geometry('300x200')
+        #self.overrideredirect(1) #Remove border
         self.title('Login')
         self.password_failure_max = 3
         self.password_failures = 0
@@ -151,17 +157,16 @@ class newlogin(tk.Tk):
         
         self.gender_radio1 = tk.Radiobutton(self.gender_frame,
                                             text = "Male", variable = self.gender,
-                                            value = 0, width = 25, indicatoron = 0)
+                                            value = 1, width = 25, indicatoron = 0)
         self.gender_radio1.grid(column = 0, row = 0, columnspan = 2, sticky = 'W')
 
         self.gender_radio2 = tk.Radiobutton(self.gender_frame,
                                             text = "Female", variable = self.gender,
-                                            value = 1, width = 25, indicatoron = 0)
+                                            value = 2, width = 25, indicatoron = 0)
         self.gender_radio2.grid(column = 0, row = 1, columnspan = 2, sticky = 'W')
         self.update()
 
         seperator = tk.Label(self.gender_frame, text = "")
-        #redbutton.pack(anchor = tk.NW)
         seperator.grid(column = 0, row = 2, sticky =' EW')
         
         self.gender_button = tk.Button(self.gender_frame, text = "Skin Colour ->",
@@ -185,14 +190,14 @@ class newlogin(tk.Tk):
         self.gender_radio1 = tk.Radiobutton(self.colour_frame,
                                             image = self.image1,
                                             variable = self.skin_tone,
-                                            value = 0, width = 40, height = 40,
+                                            value = 1, width = 40, height = 40,
                                             indicatoron = 0)
         self.gender_radio1.grid(column = 0, row = 0, columnspan = 2, sticky = 'W')
 
         self.gender_radio2 = tk.Radiobutton(self.colour_frame,
                                             image = self.image2,
                                             variable = self.skin_tone,
-                                            value = 1, width = 40, height = 40,
+                                            value = 2, width = 40, height = 40,
                                             indicatoron = 0)
         self.gender_radio2.grid(column = 1, row = 0, columnspan = 2, sticky = 'W')
         
@@ -213,9 +218,9 @@ class newlogin(tk.Tk):
         self.update()
 
         seperator = tk.Label(self.colour_frame, text = "")
-        seperator.grid(column = 0, row = 2, sticky =' EW')
+        seperator.grid(column = 0, row = 2)
         
-        self.gender_button = tk.Button(self.colour_frame, text = "Submit ->",
+        self.gender_button = tk.Button(self.colour_frame, text = "Preview ->",
                                        command = self.colour_forward_click)
         self.gender_button.grid(column = 1, row = 3)
         self.gender_back_button = tk.Button(self.colour_frame, text = "<- Back",
@@ -242,8 +247,60 @@ class newlogin(tk.Tk):
                                                      self.password_failure_max))
     def create_new_acc(self):
 
+        self.confirm_frame = ttk.Labelframe(self, text = 'Confirm Selection')
+        self.confirm_frame.pack()
+        self.grid()
+
+        username = tk.Label(self.confirm_frame,
+                            text = "Username: " + self.user_entry_variable.get(), anchor = "w")
+        username.grid(column = 0, row = 1, sticky = 'W')
+        password = tk.Label(self.confirm_frame,
+                            text = "\nPassword: *********", anchor = "w")
+        password.grid(column = 0, row = 2, sticky = 'W')
+        gend = tk.Label(self.confirm_frame,
+                            text = "\nGender: " + str(self.gender.get()), anchor = "w")
+        gend.grid(column = 0, row = 3, sticky = 'W')
+        skin = tk.Label(self.confirm_frame,
+                            text = "\nSkin Tone: " + str(self.skin_tone.get()), anchor = "w")
+        skin.grid(column = 0, row = 4, sticky = 'W')
+
+        #seperator = tk.Label(self.confirm_frame, text = "")
+        #seperator.grid(column = 0, row = 5)
+        
+        self.confirm_button = tk.Button(self.confirm_frame, text = "Confirm",
+                                       command = self.confirm_forward_click)
+        self.confirm_button.grid(column = 1, row = 6)
+        self.back_button = tk.Button(self.confirm_frame, text = "<- Back",
+                                            command = self.confirm_back_click)
+        self.back_button.grid(column = 0, row = 6, sticky = 'E')
         print("Connecting to DB")
-        self.destroy()
+        print("Username: " + self.user_entry_variable.get() +
+              "\nPassword: " + self.user_pwd_variable.get() +
+              "\nGender: " + str(self.gender.get()) +
+              "\nSkin Tone: " + str(self.skin_tone.get()))
+
+        '''ft = ttk.Frame()
+        fb = ttk.Frame()
+
+        ft.pack(expand=True, fill=tk.BOTH, side=tk.TOP)
+        fb.pack(expand=True, fill=tk.BOTH, side=tk.TOP)
+
+        pb_hd = ttk.Progressbar(ft, orient='horizontal', mode='determinate')
+        pb_hD = ttk.Progressbar(ft, orient='horizontal', mode='indeterminate')
+        pb_vd = ttk.Progressbar(fb, orient='vertical', mode='determinate')
+        pb_vD = ttk.Progressbar(fb, orient='vertical', mode='indeterminate')
+
+        pb_hd.pack(expand=True, fill=tk.BOTH, side=tk.TOP)
+        pb_hD.pack(expand=True, fill=tk.BOTH, side=tk.TOP)
+        pb_vd.pack(expand=True, fill=tk.BOTH, side=tk.LEFT)
+        pb_vD.pack(expand=True, fill=tk.BOTH, side=tk.LEFT)
+
+        pb_hd.start(10)
+        pb_hD.start(50)
+        pb_vd.start(50)
+        pb_vD.start(50)'''
+              
+        #self.destroy()
     
     def show_pass(self):
 
@@ -263,6 +320,10 @@ class newlogin(tk.Tk):
         self.login()
         
     def cred_forward_click(self):
+
+        if self.user_entry_variable.get() == '' or self.user_pwd_variable.get() == '':
+            self.label_variable.set("Plase Input a Username/Password")
+            return
         
         print(self.user_entry_variable.get())
         used = self.dataB.check_new_username(self.user_entry_variable.get())
@@ -276,6 +337,10 @@ class newlogin(tk.Tk):
 
     def check_username(self):
 
+        if self.user_entry_variable.get() == '':
+            self.label_variable.set("Plase Input a Username")
+            return
+            
         used = self.dataB.check_new_username(self.user_entry_variable.get())
         if used:
             print("Name in Use")
@@ -286,8 +351,10 @@ class newlogin(tk.Tk):
             self.label_variable.set(self.user_entry_variable.get() + " Is Available")
             
     def gender_forward_click(self):
-        
-        print(self.gender.get())
+
+        if not self.gender.get():
+            self.label_variable.set("Plase Select a Gender")
+            return
         self.gender_frame.destroy()
         self.skin_colour()
 
@@ -297,8 +364,10 @@ class newlogin(tk.Tk):
         self.user_credentials()
                     
     def colour_forward_click(self):
-        
-        print(self.skin_tone.get())
+
+        if not self.skin_tone.get():
+            self.label_variable.set("Plase Select a Skin Tone")
+            return
         self.colour_frame.destroy()
         self.create_new_acc()
 
@@ -307,6 +376,16 @@ class newlogin(tk.Tk):
         self.colour_frame.destroy()
         self.user_gender()
 
+    def confirm_forward_click(self):
+        
+        pass
+
+    def confirm_back_click(self):
+
+        self.confirm_frame.destroy()
+        self.skin_colour()
+    
 if __name__ == "__main__":
     app = newlogin(None)
+    #app.eval('tk::PlaceWindow %s center' % app.winfo_pathname(app.winfo_id()))
     app.mainloop()

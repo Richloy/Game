@@ -1,4 +1,4 @@
-'''Adding player movement'''
+'''Added player from login'''
 
 import pygame, os, MySQLdb
 from pyConnect import *
@@ -21,6 +21,7 @@ class Game:
             print (app.login_try)
             print (login)
             login = app.login_try
+            username = app.user_entry_variable.get()
         if login > 0:
             clock = pygame.time.Clock()
             zoom_img = pygame.image.load(".\images\\zoom_in.png")
@@ -37,14 +38,14 @@ class Game:
             login = True
             image = pygame.image.load(".\images\\menu_arrow.png")
             l_menu = Menu()
-            player = Player()
+            player = Player(username)
             running = True
             #Create Sprite Groups
             b_group = pygame.sprite.Group()
             p_group = pygame.sprite.Group()
             p_group.add(player)
         
-            print (app.user_entry_variable.get())
+            print ("\n\n" + app.user_entry_variable.get() + "\n\n")
         
             #Game Loop
             while running:
@@ -152,11 +153,11 @@ class Menu:
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self):
+    def __init__(self, name):
         super(Player, self).__init__()
-        self.player = dataB.get_player()
+        self.player = dataB.get_player(name)
         #Create the player image
-        self.image = pygame.image.load(".\images\\"+self.player)
+        self.image = pygame.image.load(".\images\\players\\"+self.player)
         self.rect = self.image.get_rect()
         self.rect.x = 565 #Start Position for Ball on x-axis
         self.rect.y = 205 #Start Position for Ball on y-axis
